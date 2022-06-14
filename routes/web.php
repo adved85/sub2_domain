@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+$router->get('/remoteLogin', [App\Http\Controllers\Auth\LoginController::class, 'remoteLogin']);
+$router->get('/remoteLogout', [App\Http\Controllers\Auth\LoginController::class, 'remoteLogout']);
