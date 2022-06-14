@@ -20,9 +20,16 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
+        $referer = $request->header('referer') ?? null;
+        $knownReferer = $referer && config('app.partner_url') && strstr($referer, config('app.partner_url'));
+        // dd($knownReferer);
+
+        if(config('app.env') !== 'production' && !config('app.partner_url')) {
+            dd('You need to define PARTNER_APP_URL in your .env like this http://portal.loc');
+        }
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
+            if (Auth::guard($guard)->check() && !$knownReferer) {
                 return redirect(RouteServiceProvider::HOME);
             }
         }

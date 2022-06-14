@@ -16,6 +16,11 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                <pre>
+                    @php
+                       dump(session()->all())
+                    @endphp
+                </pre>
             </div>
         </div>
     </div>
